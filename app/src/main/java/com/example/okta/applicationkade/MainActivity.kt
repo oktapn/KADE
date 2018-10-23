@@ -19,25 +19,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         text_hello.text = "Hello Kotlin"
-//        val textHello = findViewById<TextView>(R.id.text_hello)
-//        textHello.text = "Hello Kotlin!"
 
-//        val list = findViewById<RecyclerView>(R.id.club_list)
         initData()
 
         club_list.layoutManager = LinearLayoutManager(this)
         club_list.adapter = RecyclerViewAdapter(this, items) {
-            startActivity(intentFor<DetailActivity>("image" to R.drawable.img_arsenal).singleTop())
+            startActivity(intentFor<DetailActivity>("name" to "${it.name}", "image" to it.image, "desc" to it.desc).singleTop())
         }
     }
 
     private fun initData() {
         val name = resources.getStringArray(R.array.club_name)
         val image = resources.obtainTypedArray(R.array.club_image)
+        val desc = resources.getStringArray(R.array.club_desc)
+
         items.clear()
         for (i in name.indices) {
             items.add(Item(name[i],
-                    image.getResourceId(i, 0)))
+                    image.getResourceId(i, 0),
+                    desc[i]))
         }
 
         //Recycle the typed array

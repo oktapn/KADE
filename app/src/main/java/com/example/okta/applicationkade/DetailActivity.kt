@@ -1,31 +1,38 @@
 package com.example.okta.applicationkade
 
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import com.bumptech.glide.Glide
 import org.jetbrains.anko.*
 
 class DetailActivity : AppCompatActivity() {
-
+    private var name: String = ""
+    lateinit var nameTextView: TextView
+    lateinit var descTextView: TextView
+    lateinit var imageView: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MainActivityUI().setContentView(this)
-    }
-
-    class MainActivityUI : AnkoComponent<DetailActivity> {
-        override fun createView(ui: AnkoContext<DetailActivity>) = with(ui) {
-            verticalLayout {
-                imageView(R.drawable.img_barca).lparams(width = matchParent
-                        , height = 100) {
-                    padding = dip(20)
-                    margin = dip(15)
-                }
-
-                val name = editText() {
-                    hint = "What's your name?"
-                }
-
-                button("Say Hello")
+        val intent = intent
+        name = intent.getStringExtra("name")
+        var image = intent.getIntExtra("image", 0)
+        var desc = intent.getStringExtra("desc")
+        verticalLayout {
+            imageView = imageView().lparams(width = matchParent
+                    , height = 300) {
+                padding = dip(20)
+                margin = dip(15)
             }
+            nameTextView = textView()
+            nameTextView.text = name
+            descTextView = textView()
+            descTextView.text = desc
+            Glide.with(this).load(image).into(imageView)
         }
     }
+
 }
