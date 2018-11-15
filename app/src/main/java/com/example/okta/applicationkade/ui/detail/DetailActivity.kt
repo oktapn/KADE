@@ -1,4 +1,4 @@
-package com.example.okta.applicationkade
+package com.example.okta.applicationkade.ui.detail
 
 import android.os.Build
 import android.support.v7.app.AppCompatActivity

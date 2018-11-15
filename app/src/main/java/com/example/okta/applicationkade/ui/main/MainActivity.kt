@@ -1,7 +1,5 @@
-package com.example.okta.applicationkade
+package com.example.okta.applicationkade.ui.main
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
@@ -9,17 +7,21 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.*
+import com.example.okta.applicationkade.*
 import com.example.okta.applicationkade.R.array.league
-import com.example.okta.applicationkade.R.attr.colorAccent
-import com.example.okta.applicationkade.R.attr.layoutManager
+import com.example.okta.applicationkade.adapter.TeamsAdapter
+import com.example.okta.applicationkade.model.Item
+import com.example.okta.applicationkade.model.Team
+import com.example.okta.applicationkade.service.ApiRepository
+import com.example.okta.applicationkade.ui.teams.TeamsPresenter
+import com.example.okta.applicationkade.ui.teams.TeamsView
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : AppCompatActivity(), TeamsView {
 
 
     private var items: MutableList<Item> = mutableListOf()
@@ -28,8 +30,8 @@ class MainActivity : AppCompatActivity(), MainView {
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var spinner: Spinner
     private var teams: MutableList<Team> = mutableListOf()
-    private lateinit var presenter: MainPresenter
-    private lateinit var adapter: MainAdapter
+    private lateinit var presenter: TeamsPresenter
+    private lateinit var adapter: TeamsAdapter
     private lateinit var leagueName: String
 
 
@@ -38,12 +40,12 @@ class MainActivity : AppCompatActivity(), MainView {
 //        setContentView(R.layout.activity_main)
 //        text_hello.text = "Hello Kotlin"
         setLayout()
-        adapter = MainAdapter(teams)
+//        adapter = TeamsAdapter(teams)
         listTeam.adapter = adapter
 
         val request = ApiRepository()
         val gson = Gson()
-        presenter = MainPresenter(this, request, gson)
+        presenter = TeamsPresenter(this, request, gson)
         val spinnerItems = resources.getStringArray(league)
         val spinnerAdapter = ArrayAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, spinnerItems)
         spinner.adapter = spinnerAdapter

@@ -1,4 +1,4 @@
-package com.example.okta.applicationkade
+package com.example.okta.applicationkade.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
 import com.bumptech.glide.Glide
+import com.example.okta.applicationkade.model.Item
+import com.example.okta.applicationkade.R
 import kotlinx.android.synthetic.main.item_list.view.*
 
 
