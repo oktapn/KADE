@@ -2,7 +2,7 @@ package com.example.okta.applicationkade.utils
 
 import android.view.View
 
-class Utils {
+
     fun View.visible() {
         visibility = View.VISIBLE
     }
@@ -10,4 +10,3 @@ class Utils {
     fun View.invisible() {
         visibility = View.INVISIBLE
     }
-}

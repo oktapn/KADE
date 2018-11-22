@@ -1,6 +1,5 @@
 package com.example.okta.applicationkade.ui.teams
 
-import android.R
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -11,11 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.example.okta.applicationkade.R
 import com.example.okta.applicationkade.R.array.league
 import com.example.okta.applicationkade.adapter.TeamsAdapter
 import com.example.okta.applicationkade.model.Team
 import com.example.okta.applicationkade.service.ApiRepository
 import com.example.okta.applicationkade.ui.detailteam.TeamDetailActivity
+import com.example.okta.applicationkade.utils.invisible
+import com.example.okta.applicationkade.utils.visible
 import com.google.gson.Gson
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -37,7 +39,7 @@ class TeamsFragment : Fragment(), AnkoComponent<Context>, TeamsView {
         super.onActivityCreated(savedInstanceState)
 
         val spinnerItems = resources.getStringArray(league)
-        val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_dropdown_item, spinnerItems)
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, spinnerItems)
         spinner.adapter = spinnerAdapter
 
         adapter = TeamsAdapter(teams) {
@@ -75,7 +77,7 @@ class TeamsFragment : Fragment(), AnkoComponent<Context>, TeamsView {
             rightPadding = dip(16)
 
             spinner = spinner {
-                //                    id = R.id.spinner
+                id = R.id.spinner
             }
             swipeRefresh = swipeRefreshLayout {
                 setColorSchemeResources(android.R.color.holo_green_light,
@@ -87,7 +89,7 @@ class TeamsFragment : Fragment(), AnkoComponent<Context>, TeamsView {
                     lparams(width = matchParent, height = wrapContent)
 
                     listTeam = recyclerView {
-                        //                        id = R.id.list_team
+                        id = R.id.list_team
                         lparams(width = matchParent, height = wrapContent)
                         layoutManager = LinearLayoutManager(ctx)
                     }
@@ -102,11 +104,10 @@ class TeamsFragment : Fragment(), AnkoComponent<Context>, TeamsView {
     }
 
     override fun showLoading() {
-        progressBar.visibility = View.VISIBLE
-    }
+        progressBar.visible()    }
 
     override fun hideLoading() {
-        progressBar.visibility = View.GONE
+        progressBar.invisible()
     }
 
     override fun showTeamList(data: List<Team>) {
@@ -114,9 +115,6 @@ class TeamsFragment : Fragment(), AnkoComponent<Context>, TeamsView {
         teams.clear()
         teams.addAll(data)
         adapter.notifyDataSetChanged()
-        adapter = TeamsAdapter(teams) {
-            context?.startActivity<TeamDetailActivity>("id" to "${it.teamId}")
-        }
     }
 
 }

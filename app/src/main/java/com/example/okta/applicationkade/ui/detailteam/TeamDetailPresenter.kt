@@ -4,6 +4,9 @@ import com.example.okta.applicationkade.model.TeamResponse
 import com.example.okta.applicationkade.service.ApiRepository
 import com.example.okta.applicationkade.service.TheSportDBApi
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -13,16 +16,13 @@ class TeamDetailPresenter(private val view: TeamDetailView,
 
     fun getTeamDetail(teamId: String) {
         view.showLoading()
-        doAsync {
-            val data = gson.fromJson(apiRepository
-                    .doRequest(TheSportDBApi.getTeamDetail(teamId)),
-                    TeamResponse::class.java
-            )
+        GlobalScope.launch(Dispatchers.Main){
+            val data =gson.fromJson(apiRepository
+                    .doRequest(TheSportDBApi.getTeamDetail(teamId)).await(),
+                    TeamResponse::class.java)
 
-            uiThread {
-                view.hideLoading()
-                view.showTeamDetail(data.teams)
-            }
+            view.showTeamDetail(data.teams)
+            view.hideLoading()
         }
     }
 }

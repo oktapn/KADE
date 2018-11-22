@@ -24,6 +24,8 @@ import com.example.okta.applicationkade.database.Favorite
 import com.example.okta.applicationkade.database.database
 import com.example.okta.applicationkade.model.Team
 import com.example.okta.applicationkade.service.ApiRepository
+import com.example.okta.applicationkade.utils.invisible
+import com.example.okta.applicationkade.utils.visible
 import com.google.gson.Gson
 import org.jetbrains.anko.*
 import org.jetbrains.anko.db.classParser
@@ -134,11 +136,11 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
     }
 
     override fun showLoading() {
-        progressBar.visibility = View.VISIBLE
+        progressBar.visible()
     }
 
     override fun hideLoading() {
-        progressBar.visibility = View.GONE
+        progressBar.invisible()
     }
 
     override fun showTeamDetail(data: List<Team>) {

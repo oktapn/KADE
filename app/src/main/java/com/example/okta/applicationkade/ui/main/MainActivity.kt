@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), TeamsView {
         val gson = Gson()
         presenter = TeamsPresenter(this, request, gson)
         val spinnerItems = resources.getStringArray(league)
-        val spinnerAdapter = ArrayAdapter(ctx, android.R.layout.simple_spinner_dropdown_item, spinnerItems)
+        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, spinnerItems)
         spinner.adapter = spinnerAdapter
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity(), TeamsView {
 
                     listTeam = recyclerView {
                         lparams(width = matchParent, height = wrapContent)
-                        layoutManager = LinearLayoutManager(ctx)
+                        layoutManager = LinearLayoutManager(this@MainActivity)
                     }
 
                     progressBar = progressBar {
